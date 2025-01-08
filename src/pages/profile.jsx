@@ -1,89 +1,107 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
+const Profile = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCarryOnModalOpen, setIsCarryOnModalOpen] = useState(false);
 
- const Profile = () => {
-   const [isModalOpen, setIsModalOpen] = useState(false);
- 
-   const handleOpenModal = () => {
-     setIsModalOpen(true);
-   };
- 
-   const handleCloseModal = () => {
-     setIsModalOpen(false);
-   };
- 
-   return (
-     <>
-       <div>
-         <h1>Welcome Dear Colleague to your Profile</h1>
-         {/* Button to open the modal */}
-         <button onClick={handleOpenModal}>New Tab</button>
-         <button>Carry On</button>
-       </div>
- 
-       {/* Modal for the 4 buttons */}
-       {isModalOpen && (
-         <div style={styles.modalOverlay}>
-           <div style={styles.modalContent}>
-             <h2>Select a Tab</h2>
-             <button onClick={() => (window.location.href = "/Tableau")}>Tab 1</button>
-             <button onClick={() => (window.location.href = "/Tableau2")}>Tab 2</button>
-             <button onClick={() => (window.location.href = "/Tableau3")}>Tab 3</button>
-             <button onClick={() => (window.location.href = "/Tableau4")}>Tab 4</button>
-             <button style={styles.closeButton} onClick={handleCloseModal}>
-               Close
-             </button>
-           </div>
-         </div>
-       )}
-     </>
-   );
- };
-
-const styles = {
-    modalOverlay: {
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      zIndex: 1000,
-    },
-    modalContent: {
-      backgroundColor: "white",
-      padding: "20px",
-      borderRadius: "8px",
-      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-      textAlign: "center",
-      width: "400px",
-      maxHeight: "90%",
-      overflowY: "auto",
-    },
-    buttonContainer: {
-      marginBottom: "20px",
-      display: "flex",
-      justifyContent: "space-around",
-    },
-    tabContent: {
-      marginTop: "20px",
-      padding: "10px",
-      border: "1px solid #ccc",
-      borderRadius: "4px",
-    },
-    closeButton: {
-      marginTop: "20px",
-      padding: "10px 20px",
-      backgroundColor: "#f44336",
-      color: "white",
-      border: "none",
-      borderRadius: "4px",
-      cursor: "pointer",
-    },
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
   };
-  
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleOpenCarryOnModal = () => {
+    setIsCarryOnModalOpen(true);
+  };
+
+  const handleCloseCarryOnModal = () => {
+    setIsCarryOnModalOpen(false);
+  };
+
+  const handleNavigate = (path) => {
+    window.location.href = path;
+    handleCloseModal();
+  };
+
+  return (
+    <>
+      <div className="flex flex-col gap-6 w-screen h-screen items-center justify-center">
+        <div className="flex justify-center items-center gap-3">
+          <h1 className="text-2xl font-bold ">Welcome to your Profile</h1>
+        </div>
+        <button 
+          className="btn btn-primary font-semibold"
+          onClick={handleOpenModal}
+        >
+          New Tab
+        </button>
+        <button         
+          className="btn btn-primary font-semibold"
+          onClick={handleOpenCarryOnModal}
+        >
+          Carry On
+        </button>
+      </div>
+
+      {/* Modal for New Tab */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h2 className="text-xl font-bold mb-4">Select a Tab</h2>
+            <div className="flex flex-col gap-3">
+              <button 
+                className="btn btn-accent btn-block uppercase"
+                onClick={() => handleNavigate('/Tableau')}
+              >
+                tab1
+              </button>
+              <button 
+                className="btn btn-accent btn-block uppercase"
+                onClick={() => handleNavigate('/Tableau2')}
+              >
+                tab2
+              </button>
+              <button 
+                className="btn btn-accent btn-block uppercase"
+                onClick={() => handleNavigate('/Tableau3')}
+              >
+                tab3
+              </button>
+              <button 
+                className="btn btn-accent btn-block uppercase"
+                onClick={() => handleNavigate('/Tableau4')}
+              >
+                tab4
+              </button>
+              <button 
+                className="btn btn-outline btn-block uppercase mt-3"
+                onClick={handleCloseModal}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal for Carry On */}
+      {isCarryOnModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full text-center">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">Coming Soon</h2>
+            <button 
+              className="btn btn-outline btn-block uppercase"
+              onClick={handleCloseCarryOnModal}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
 
 export default Profile;
