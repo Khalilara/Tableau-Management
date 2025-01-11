@@ -5,6 +5,9 @@ const EditableTable = () => {
     { id: 1, name: "Cy Ganderton", job: "Quality Control Specialist", company: "Littel, Schaden and Vandervort", location: "Canada", lastLogin: "12/16/2020", color: "default" },
     { id: 2, name: "Hart Hagerty", job: "Desktop Support Technician", company: "Zemlak, Daniel and Leannon", location: "United States", lastLogin: "12/5/2020", color: "default" },
   ]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(tableData.length / itemsPerPage);
 
   const [editCell, setEditCell] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -135,6 +138,18 @@ const EditableTable = () => {
     });
     setIsModalOpen(false);
   };
+  const handlePrevPage = () => {
+    setCurrentPage(prev => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(prev => Math.min(prev + 1, totalPages));
+  };
+
+  // Calculate current page items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = tableData.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <div className="space-y-4">
@@ -262,6 +277,28 @@ const EditableTable = () => {
               ))}
             </tbody>
           </table>
+        </div>
+          {/* Pagination */}
+          <div className="flex justify-center py-4 border-t">
+          <div className="join">
+            <button 
+              className="join-item btn"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              «
+            </button>
+            <button className="join-item btn">
+              Page {currentPage}
+            </button>
+            <button 
+              className="join-item btn"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              »
+            </button>
+          </div>
         </div>
       </div>
     </div>
